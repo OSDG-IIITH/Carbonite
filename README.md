@@ -1,6 +1,6 @@
 # Carbonite
 
-A Discord Bot that take code messages and converts them into beautiful images. Powered by [Carbon](https://carbon.now.sh).
+A Discord Bot that takes code messages and converts them into beautiful images. Powered by [Carbon](https://carbon.now.sh).
 
 ### Get it working
 
@@ -32,7 +32,7 @@ The Bot has 2 main parts:
 
 1. The Bot interface, powered by `Discord.js v13`, that handles receiving, parsing and sending messages.
 
-2. The "Carbonizer", powered by `Puppeteer`. It spawns a headless browser that uses uses Carbon like a human user would, then screenshots the DOM element that has the prettified code image and returns a byte stream of the image data back to the bot to send to Discord.
+2. The "Carbonizer", powered by `Puppeteer`. It spawns a headless browser that modifies the Carbon webpage's contents to accomodate for the code, then screenshots the DOM element that has the prettified code image and returns a byte stream of the image data back to the bot to send to Discord.
 
 ### Future Plans
 
