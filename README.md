@@ -36,7 +36,7 @@ The Bot has 2 main parts:
 
 ### Future Plans
 
-1. Add option to specify theme. Check Carbon for the list of avaiable themes.
+1. Add option to specify theme. Check Carbon for the list of available themes.
 2. Add option to specify language. By default, it is on auto-detect, but this may lead to improper syntax highlighting.
 3. Delete the original message requesting the carbonification.
 4. Add a "Carbonite is typing..." prompt to Discord while the bot generates and sends the image.
