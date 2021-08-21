@@ -1,38 +1,74 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require("puppeteer");
 
-const getImageFile = async (code) => {
+const getImageFile = async (code, theme) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const browser = await puppeteer.launch();
+      const carbonPage = await browser.newPage({
+        waitUntil: "networkidle0",
+        timeout: 0,
+      });
+      await carbonPage.setViewport({
+        width: 1920,
+        height: 1080,
+        deviceScaleFactor: 2.5,
+      });
 
-    return new Promise(async (resolve, reject) => {
+      await carbonPage.goto(
+        `https://carbon.now.sh/?code=${encodeURIComponent(code)}&t=${theme}`
+      );
+      await carbonPage.waitForSelector("#export-container");
+      const element = await carbonPage.$("#export-container");
 
-        try {
-            const browser = await puppeteer.launch();
-            const carbonPage = await browser.newPage({ waitUntil: 'networkidle0', timeout: 0 });
-            await carbonPage.setViewport({
-                width: 1920,
-                height: 1080,
-                deviceScaleFactor: 2.5
-            });
+      const carbonPic = await element.screenshot({
+        type: "jpeg",
+        quality: 100,
+      });
 
-            await carbonPage.goto(`https://carbon.now.sh/?code=${encodeURIComponent(code)}`);
-            await carbonPage.waitForSelector('#export-container');
-            const element = await carbonPage.$('#export-container');
+      await carbonPage.close();
+      await browser.close();
 
-            const carbonPic = await element.screenshot({
-                type: 'jpeg',
-                quality: 100,
-            });
+      resolve(carbonPic);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 
-            await carbonPage.close();
-            await browser.close();
+const checkTheme = async (theme) => {
+  const themes = [
+    "3024-night",
+    "a11y-dark",
+    "base16-dark",
+    "base16-light",
+    "blackboard",
+    "cobalt",
+    "duotone-dark",
+    "hopscotch",
+    "lucario",
+    "material",
+    "monokai",
+    "night-owl",
+    "nord",
+    "oceanic-next",
+    "one-light",
+    "one-dark",
+    "panda-syntax",
+    "paraiso-dark",
+    "seti",
+    "shades-of-purple",
+    "solarized+dark",
+    "solarized+light",
+    "synthwave-84",
+    "twilight",
+    "verminal",
+    "vscode",
+    "yeti",
+    "zenburn",
+  ];
 
-            resolve(carbonPic);
+  if (themes.includes(theme)) return true;
+  else return false;
+};
 
-        }
-        catch (e) {
-            reject(e);
-        }
-
-    });
-}
-
-module.exports = { getImageFile };
+module.exports = { getImageFile, checkTheme };
