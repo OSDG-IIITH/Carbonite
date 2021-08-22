@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const { languageList, themeList } = require('./config.json');
+const languageList = require('./config.json');
 
 const getImageFile = async (code, language) => {
 	return new Promise(async (resolve, reject) => {
