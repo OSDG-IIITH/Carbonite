@@ -14,11 +14,10 @@ const getImageFile = async (code, theme) => {
                 deviceScaleFactor: 2.5,
             });
 
-            await carbonPage.goto(
-                `https://carbon.now.sh/?code=${encodeURIComponent(
-                    code
-                )}&t=${theme}`
-            );
+            code = encodeURIComponent(code);
+            link = `https://carbon.now.sh/?code=${code}&l=${language}`;
+            await carbonPage.goto(link);
+
             await carbonPage.waitForSelector("#export-container");
             const element = await carbonPage.$("#export-container");
 
@@ -37,7 +36,7 @@ const getImageFile = async (code, theme) => {
     });
 };
 
-const checkTheme = async (theme) => {
+const checkTheme = (theme) => {
     const themes = [
         "3024-night",
         "a11y-dark",

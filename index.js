@@ -17,7 +17,7 @@ client.on("messageCreate", async (msg) => {
     if (msg.content.startsWith("carbonite")) {
         let theme = msg.content.match(/\S+/gi)[1];
 
-        theme = (await checkTheme(theme)) ? theme : "nord";
+        theme = checkTheme(theme) ? theme : "nord";
 
         let mdCode = msg.content.substring(msg.content.indexOf("\n") + 1);
         if (mdCode.startsWith("```\n") && mdCode.endsWith("\n```")) {
