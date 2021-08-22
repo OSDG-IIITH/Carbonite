@@ -16,20 +16,22 @@ client.on("ready", () => {
 client.on("messageCreate", async (msg) => {
 	if (msg.content.startsWith("carbonite")) {
 		let mdCode = msg.content.substring(msg.content.indexOf("\n") + 1);
-		// parses out the language specified in ```language
-		let mdLanguage = mdCode.split(" ")[0].split("\n")[0].substring(3);
-		// first word in code (specifies language, and beginning of code)
-		let language = await checkLanguage(mdLanguage);
+
+		const lines = mdCode.split('\n');
+		console.log(lines);
+
+		const initLineRE = /```[\w#\+-\/]*/;
 
 		if (
-			mdCode.startsWith(`\`\`\`${mdLanguage}\n`) &&
-			mdCode.endsWith("\n```")
+			initLineRE.test(lines[0]) &&
+			lines[lines.length - 1].endsWith("```")
 		) {
-			// remove the words with ``` from the code
-			mdCode = mdCode.replace(`\`\`\`${mdLanguage}\n`, "");
-			mdCode = mdCode.replace("\n```", "");
+			const mdLanguage = lines[0].slice(3);
+			const codeLines = lines.slice(1, -1);
+			const code = codeLines.join('\n');
+			const language = checkLanguage(mdLanguage);
 
-			const codeImage = await getImageFile(mdCode, language);
+			const codeImage = await getImageFile(code, language);
 			msg.channel.send({ files: [{ attachment: codeImage }] });
 		} else msg.reply("Invalid syntax. Could not parse message.");
 	}
