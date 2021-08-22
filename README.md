@@ -2,6 +2,9 @@
 
 A Discord Bot that takes code messages and converts them into beautiful images. Powered by [Carbon](https://carbon.now.sh).
 
+![image](https://user-images.githubusercontent.com/37783178/130370494-a75fdf2d-bbdf-4891-b7c3-5c0dded1dc3b.png)
+
+
 ### Get it working
 
 The repo is written in JavaScript. To run in you need to have `node 16` installed. Follow these steps to get started:
@@ -36,7 +39,7 @@ The Bot has 2 main parts:
 
 ### Future Plans
 
-1. Add option to specify theme. Check Carbon for the list of available themes.
-2. Add option to specify language. By default, it is on auto-detect, but this may lead to improper syntax highlighting.
-3. Delete the original message requesting the carbonification.
-4. Add a "Carbonite is typing..." prompt to Discord while the bot generates and sends the image.
+1. Delete the original message requesting the carbonification.
+2. Add a "Carbonite is typing..." prompt to Discord while the bot generates and sends the image.
+3. Create a help event that explains bot usage.
+4. Create a list event that lists available themes and languages
