@@ -1,6 +1,7 @@
 const puppeteer = require("puppeteer");
+const { languageList, themeList } = require("./config.json");
 
-const getImageFile = async (code, theme) => {
+const getImageFile = async (code, theme, language) => {
     return new Promise(async (resolve, reject) => {
         try {
             const browser = await puppeteer.launch();
@@ -8,6 +9,7 @@ const getImageFile = async (code, theme) => {
                 waitUntil: "networkidle0",
                 timeout: 0,
             });
+
             await carbonPage.setViewport({
                 width: 1920,
                 height: 1080,
@@ -15,15 +17,14 @@ const getImageFile = async (code, theme) => {
             });
 
             code = encodeURIComponent(code);
-            link = `https://carbon.now.sh/?code=${code}&l=${language}`;
+            const link = `https://carbon.now.sh/?code=${code}&t=${theme}&l=${language}`;
             await carbonPage.goto(link);
 
             await carbonPage.waitForSelector("#export-container");
             const element = await carbonPage.$("#export-container");
 
             const carbonPic = await element.screenshot({
-                type: "jpeg",
-                quality: 100,
+                type: "png",
             });
 
             await carbonPage.close();
@@ -36,39 +37,8 @@ const getImageFile = async (code, theme) => {
     });
 };
 
-const checkTheme = (theme) => {
-    const themes = [
-        "3024-night",
-        "a11y-dark",
-        "base16-dark",
-        "base16-light",
-        "blackboard",
-        "cobalt",
-        "duotone-dark",
-        "hopscotch",
-        "lucario",
-        "material",
-        "monokai",
-        "night-owl",
-        "nord",
-        "oceanic-next",
-        "one-light",
-        "one-dark",
-        "panda-syntax",
-        "paraiso-dark",
-        "seti",
-        "shades-of-purple",
-        "solarized+dark",
-        "solarized+light",
-        "synthwave-84",
-        "twilight",
-        "verminal",
-        "vscode",
-        "yeti",
-        "zenburn",
-    ];
+const checkTheme = (theme) => themeList.includes(theme);
 
-    return themes.includes(theme);
-};
+const getLanguage = (language) => languageList[language] ?? "auto";
 
-module.exports = { getImageFile, checkTheme };
+module.exports = { getImageFile, checkTheme, getLanguage };
