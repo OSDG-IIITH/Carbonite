@@ -82,6 +82,5 @@
         "Vue": "vue",
         "XQuery": "xquery",
         "YAML": "yaml"
-    },
-    "themeList": ["one-dark", "nord", "darcula"]
+    }
 }

@@ -18,7 +18,6 @@ client.on("messageCreate", async (msg) => {
 		let mdCode = msg.content.substring(msg.content.indexOf("\n") + 1);
 
 		const lines = mdCode.split('\n');
-		console.log(lines);
 
 		const initLineRE = /```[\w#\+-\/]*/;
 
