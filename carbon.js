@@ -67,8 +67,7 @@ const checkTheme = async (theme) => {
     "zenburn",
   ];
 
-  if (themes.includes(theme)) return true;
-  else return false;
+  return themes.includes(theme);
 };
 
 module.exports = { getImageFile, checkTheme };

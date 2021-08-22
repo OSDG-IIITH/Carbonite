@@ -18,8 +18,8 @@ client.on("messageCreate", async (msg) => {
 
     let mdCode = msg.content.substring(msg.content.indexOf("\n") + 1);
     if (mdCode.startsWith("```\n") && mdCode.endsWith("\n```")) {
-      mdCode = mdCode.replace("```\n", "");
-      mdCode = mdCode.replace("\n```", "");
+      mdCode = mdCode.replace("```\n", "").replace("\n```", "");
+
       const codeImage = await getImageFile(mdCode, theme);
       msg.channel.send({ files: [{ attachment: codeImage }] });
     } else msg.reply("Invalid syntax. Could not parse message.");
