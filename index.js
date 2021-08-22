@@ -31,8 +31,12 @@ client.on("messageCreate", async (msg) => {
             const theme = checkTheme(userTheme) ? userTheme : "one-dark";
             const code = userCode.join("\n");
 
+            await msg.channel.sendTyping();
             const codeImage = await getImageFile(code, theme, language);
-            msg.channel.send({ files: [{ attachment: codeImage }] });
+            await msg.channel.send({ files: [{ attachment: codeImage }] });
+            if(msg.deletable && !msg.deleted){
+                await msg.delete();
+            }
         } else msg.reply("Invalid syntax. Could not parse message.");
     }
 });
